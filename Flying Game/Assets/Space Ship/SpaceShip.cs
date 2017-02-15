@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour {
 
+	// Movement
 	public float velocityDecay = 0.9f;
 	public float topSpeed = 5f;
+
+	// Shooting
+	public float fireRate = 0.1f;
+	float timeSinceLastShot;
+	public GameObject bullet;
+	Transform gunTip;
 
 	Rigidbody rb;
 	Animator animator;
 
-	void Start() {
+	void Start()
+	{
+		timeSinceLastShot = fireRate;
+
 		rb = GetComponent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
+		gunTip = GameObject.Find ("Gun Tip").transform;
 	}
 
 	void Update ()
@@ -28,5 +39,13 @@ public class SpaceShip : MonoBehaviour {
 		// Animation
 		animator.SetFloat("x", MyMath.Map(rb.velocity.x, -topSpeed, topSpeed, -1f, 1f));
 		animator.SetFloat("y", MyMath.Map(rb.velocity.y, -topSpeed, topSpeed, -1f, 1f));
+
+		// Shooting
+		timeSinceLastShot += Time.deltaTime;
+		if (Input.GetButton("Space") && timeSinceLastShot >= fireRate)
+		{
+			Instantiate (bullet, gunTip.position , gunTip.rotation);
+			timeSinceLastShot = 0.0f;
+		}
 	}
 }
