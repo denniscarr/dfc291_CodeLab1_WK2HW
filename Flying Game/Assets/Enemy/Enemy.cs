@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour {
 				Instantiate (explosion, transform.position, Quaternion.identity);
 				GetComponent<Rigidbody> ().isKinematic = false;
 				GetComponent<Rigidbody> ().useGravity = true;
-				GetComponent<Rigidbody> ().AddForce (Vector3.up * 25f, ForceMode.Impulse);
+				GetComponent<Rigidbody> ().velocity = Vector3.up * 25f;
+				GetComponent<Rigidbody> ().AddForce (Vector3.back * 5f, ForceMode.Impulse);
 				GetComponent<Rigidbody> ().AddTorque (Random.insideUnitSphere * 50f, ForceMode.Impulse);
 				GetComponent<Animator> ().Stop ();
 				deathParticles.SetActive (true);

@@ -9,6 +9,7 @@ public class SpaceShip : MonoBehaviour {
 	// Movement
 	public float velocityDecay = 0.9f;
 	public float topSpeed = 5f;
+	public float accelerationFactor = 2f;
 
 	// Shooting
 	public float fireRate = 0.1f;
@@ -34,8 +35,8 @@ public class SpaceShip : MonoBehaviour {
 	{
 		// Movement
 		Vector3 newVelocity = rb.velocity * velocityDecay;
-		newVelocity.x += Input.GetAxis ("Horizontal");
-		newVelocity.y += Input.GetAxis ("Vertical");
+		newVelocity.x += Input.GetAxis ("Horizontal")*accelerationFactor;
+		newVelocity.y += Input.GetAxis ("Vertical")*accelerationFactor;
 		newVelocity.x = Mathf.Clamp (newVelocity.x, -topSpeed, topSpeed);
 		newVelocity.y = Mathf.Clamp (newVelocity.y, -topSpeed, topSpeed);
 		rb.velocity = newVelocity;
