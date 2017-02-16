@@ -5,7 +5,7 @@ using UnityEngine;
 public class DennisGameManager : MonoBehaviour {
 
 	// How far from the center of the screen things are allowed to move.
-	[SerializeField] float moveRangeX, moveRangeY;
+	public float moveRangeX, moveRangeY;
 
 	public void ClampMe(Transform me) {
 		Vector3 clampedPos = new Vector3 (
