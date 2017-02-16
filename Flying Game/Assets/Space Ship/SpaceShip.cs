@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour {
 
+	DennisGameManager gm;
+
 	// Movement
 	public float velocityDecay = 0.9f;
 	public float topSpeed = 5f;
@@ -19,6 +21,8 @@ public class SpaceShip : MonoBehaviour {
 
 	void Start()
 	{
+		gm = GameObject.Find ("Dennis Game Manager").GetComponent<DennisGameManager> ();
+
 		timeSinceLastShot = fireRate;
 
 		rb = GetComponent<Rigidbody> ();
@@ -35,6 +39,8 @@ public class SpaceShip : MonoBehaviour {
 		newVelocity.x = Mathf.Clamp (newVelocity.x, -topSpeed, topSpeed);
 		newVelocity.y = Mathf.Clamp (newVelocity.y, -topSpeed, topSpeed);
 		rb.velocity = newVelocity;
+
+		gm.ClampMe (transform);
 
 		// Animation
 		animator.SetFloat("x", MyMath.Map(rb.velocity.x, -topSpeed, topSpeed, -1f, 1f));

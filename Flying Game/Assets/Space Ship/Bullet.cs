@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour {
 
 	public float speed;
 
+	public GameObject explosion;
+
 	Rigidbody rb;
 	MeshRenderer meshRenderer;
 
@@ -24,5 +26,13 @@ public class Bullet : MonoBehaviour {
 		// Texture Stuff
 		float offset = Time.time*-1f;
 		meshRenderer.material.SetTextureOffset ("_MainTex", new Vector2 (offset, offset));
+	}
+
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.tag == "Enemy") {
+			Destroy (gameObject);
+			Instantiate (explosion, transform.position, Quaternion.identity);
+			collision.gameObject.GetComponent<Enemy> ().Health -= 1;
+		}
 	}
 }
