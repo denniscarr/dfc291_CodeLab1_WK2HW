@@ -13,6 +13,7 @@ public class SpaceShip : MonoBehaviour {
 
 	// Shooting
 	public float fireRate = 0.1f;
+	public float spread = 0.1f;
 	float timeSinceLastShot;
 	public GameObject bullet;
 	Transform gunTip;
@@ -51,7 +52,10 @@ public class SpaceShip : MonoBehaviour {
 		timeSinceLastShot += Time.deltaTime;
 		if (Input.GetButton("Space") && timeSinceLastShot >= fireRate)
 		{
-			Instantiate (bullet, gunTip.position , gunTip.rotation);
+			Vector3 bulletSpread = gunTip.transform.forward;
+			bulletSpread.x += Random.Range (-spread, spread);
+			bulletSpread.y += Random.Range (-spread, spread);
+			Instantiate (bullet, gunTip.position , Quaternion.Euler(bulletSpread+gunTip.rotation.eulerAngles));
 			timeSinceLastShot = 0.0f;
 		}
 	}
