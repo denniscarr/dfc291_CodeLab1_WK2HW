@@ -7,6 +7,9 @@ public class DennisGameManager : MonoBehaviour {
 	// How far from the center of the screen things are allowed to move.
 	public float moveRangeX, moveRangeY;
 
+	// Health pieces
+	public GameObject[] healthPieces;
+
 	public void ClampMe(Transform me)
 	{
 		Vector3 clampedPos = new Vector3 (
@@ -30,5 +33,12 @@ public class DennisGameManager : MonoBehaviour {
 		}
 
 		me.GetComponent<Rigidbody> ().velocity = newVelocity;
+	}
+
+	public void RemoveHealth(int currentHealth) {
+		if (currentHealth < 0) {
+			return;
+		}
+		healthPieces [currentHealth].SetActive (false);
 	}
 }

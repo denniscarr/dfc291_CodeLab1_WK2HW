@@ -115,4 +115,14 @@ public class Enemy : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+
+	void OnTriggerEnter(Collider collider) {
+		if (collider.gameObject.tag == "Player" && !dead) {
+			// Hurt player and destroy self
+			collider.gameObject.GetComponent<SpaceShip> ().Health -= 1;
+			Instantiate (explosion, transform.position, Quaternion.identity);
+			Destroy (gameObject);
+		}
+	}
 }
