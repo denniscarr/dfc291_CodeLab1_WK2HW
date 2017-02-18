@@ -18,6 +18,17 @@ public class SpaceShip : MonoBehaviour {
 	public GameObject bullet;
 	Transform gunTip;
 
+	int health = 3;
+	public int Health {
+		get {
+			return health;
+		}
+		set {
+			health = value;
+			GameObject.FindObjectOfType<ScreenShakeScript> ().SendMessage ("IncreaseShake", 1f);
+		}
+	}
+
 	Rigidbody rb;
 	Animator animator;
 
