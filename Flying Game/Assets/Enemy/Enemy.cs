@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	// Health stuff
 	bool dead;
 	public int maxHealth = 10;
+
 	private int health;
 	public int Health {
 		get {
@@ -18,6 +19,12 @@ public class Enemy : MonoBehaviour {
 			// See if I died
 			if (health <= 0) {
 				Instantiate (explosion, transform.position, Quaternion.identity);
+
+				// Give points
+				if (!dead) {gm.bouncingBoys ++;}
+				numberOfTimesBounced ++;
+				gm.Score += numberOfTimesBounced * gm.bouncingBoys;
+				gm.PopupScore (transform.position, numberOfTimesBounced * gm.bouncingBoys);
 
 				// Bounce the enemy's corpse
 				GetComponent<Rigidbody> ().isKinematic = false;
@@ -43,6 +50,8 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 	}
+
+	int numberOfTimesBounced = 0;
 
 	// Movement stuff
 	float noiseOffset;
@@ -111,7 +120,9 @@ public class Enemy : MonoBehaviour {
 			gm.BounceMe (transform);
 		}
 
-		if (transform.position.z < -50f || transform.position.y < -50f) {
+		// Destroy me if I leave the screen
+		if (transform.position.z < -25f || transform.position.y < -25f) {
+			gm.bouncingBoys--;
 			Destroy (gameObject);
 		}
 	}
